@@ -1,0 +1,8 @@
+# tests (planning)
+
+Planning placeholder. Real tests source intake follows the central
+v003 compatibility contract once reviewed. No fabricated RTL,
+runtime, or evidence is added here.
+
+See [`SOURCE_MANIFEST.md`](../SOURCE_MANIFEST.md) and
+[`docs/`](../docs/) for the planning narrative.
