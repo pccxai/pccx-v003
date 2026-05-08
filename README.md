@@ -15,10 +15,10 @@ material.
   published yet.
 - No bitstream, no timing closure, no board runtime, no
   tokens-per-second, no FPS, no mAP claim.
-- The temporary LLM planning line lives at
-  [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003).
-  It feeds this package and will be reviewed for consolidation under
-  `pccx-v003/LLM/` once the v003 contract is stable.
+- [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
+  a historical temporary feeder for early v003 LLM planning. It is now
+  superseded / retired and is no longer an active public track. Any new
+  reusable v003 LLM material belongs under `LLM/` of this repository.
 
 ## What this package will hold (target shape)
 
