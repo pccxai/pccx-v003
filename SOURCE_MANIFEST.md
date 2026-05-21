@@ -1,11 +1,16 @@
 # Source manifest
 
-> Phase 1 adds interface-only v003 RTL skeleton files. No reusable
-> implementation RTL has been imported yet.
+> Phase 1 adds interface-only v003 RTL skeleton files and reusable
+> common interface/core signatures. Implementation RTL has not been
+> imported yet.
 
 | domain | source repo | source SHA | source path | dest path | status |
 | --- | --- | --- | --- | --- | --- |
 | RTL skeleton | n/a | n/a | n/a | `hw/rtl/v003/` | interface-only skeleton |
+| Common interfaces | n/a | n/a | n/a | `common/interfaces/` | interface-only skeleton |
+| Common core signatures | n/a | n/a | n/a | `common/{attention,ffn,matmul,normalization,sampling,interconnect}/` | signature-only skeleton |
+| UVM skeleton | n/a | n/a | n/a | `tb/` | skeleton |
+| AWS F2 constraints | n/a | n/a | n/a | `constraints/v003_aws_f2.xdc` | placeholder |
 | LLM | `pccxai/pccx-LLM-v003` (temporary planning line) | TBD | TBD | `LLM/...` | planning intake |
 | Vision | `pccxai/pccx-vision-v001` (compatibility track) | TBD | TBD | `Vision/...` | planning intake (compatibility review pending) |
 | Voice | n/a | n/a | n/a | `Voice/...` | placeholder |

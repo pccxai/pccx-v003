@@ -1,8 +1,8 @@
-# tests (planning)
+# tests
 
-Planning placeholder. Real tests source intake follows the central
-v003 compatibility contract once reviewed. No fabricated RTL,
-runtime, or evidence is added here.
+Shared test fixtures will live here after the v003 compatibility
+contract is reviewed. The reusable UVM skeleton for this library starts
+under [`../tb/`](../tb/).
 
 See [`SOURCE_MANIFEST.md`](../SOURCE_MANIFEST.md) and
 [`docs/`](../docs/) for the planning narrative.

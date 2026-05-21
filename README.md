@@ -13,6 +13,8 @@ material.
 
 - **Phase 1 skeleton.** Interface-only v003 RTL skeleton files live
   under `hw/rtl/v003/`.
+- **Library skeleton.** Reusable common interface/core signatures live
+  under `common/`, with reusable UVM placeholders under `tb/`.
 - Implementation, verification, build flow, board runtime, and measurement
   work are separate future phases.
 - [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
@@ -33,6 +35,20 @@ material.
 | `hw/rtl/v003/` | interface-only v003 RTL skeleton |
 | `tests/` | shared test fixtures, intake tests for absorbed material |
 | `scripts/` | filelist, build, claim-scan, repo-boundary scripts |
+
+## Current library skeleton
+
+| Directory | Current content |
+| --- | --- |
+| `common/interfaces/` | AXI HP, ACP, AXI-Lite command, tensor stream, and token output interfaces. |
+| `common/attention/` | attention, KV cache, and softmax core signatures. |
+| `common/ffn/` | feed-forward, GELU, and SiLU core signatures. |
+| `common/matmul/` | INT4/INT8, INT8/INT8, and INT32 accumulator signatures. |
+| `common/normalization/` | RMSNorm and LayerNorm core signatures. |
+| `common/sampling/` | argmax and optional top-k sampler signatures. |
+| `common/interconnect/` | tensor stream crossbar and arbiter signatures. |
+| `tb/` | UVM environment, sequence, and Gemma 4 E4B smoke-test skeletons. |
+| `constraints/` | AWS F2 placeholder constraint anchor. |
 
 ## Boundary rule (unchanged from v002)
 
