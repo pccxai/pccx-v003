@@ -11,10 +11,10 @@ material.
 
 ## Status
 
-- **Planning / evidence-gated.** No reusable v003 RTL has been
-  published yet.
-- No bitstream, no timing closure, no board runtime, no
-  tokens-per-second, no FPS, no mAP claim.
+- **Phase 1 skeleton.** Interface-only v003 RTL skeleton files live
+  under `hw/rtl/v003/`.
+- Implementation, verification, build flow, board runtime, and measurement
+  work are separate future phases.
 - [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
   a historical temporary feeder for early v003 LLM planning. It is now
   superseded / retired and is no longer an active public track. Any new
@@ -30,6 +30,7 @@ material.
 | `common/` | shared packages, interfaces, wrappers |
 | `compatibility/` | `v003-contract.yaml` plus register / memory / top-interface frozen documents |
 | `docs/` | per-domain READMEs and the v003 contract narrative |
+| `hw/rtl/v003/` | interface-only v003 RTL skeleton |
 | `tests/` | shared test fixtures, intake tests for absorbed material |
 | `scripts/` | filelist, build, claim-scan, repo-boundary scripts |
 
