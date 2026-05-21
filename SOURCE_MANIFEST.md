@@ -1,9 +1,11 @@
-# Source manifest (planning placeholders)
+# Source manifest
 
-> Planning intake. No reusable v003 RTL has been imported yet.
+> Phase 1 adds interface-only v003 RTL skeleton files. No reusable
+> implementation RTL has been imported yet.
 
 | domain | source repo | source SHA | source path | dest path | status |
 | --- | --- | --- | --- | --- | --- |
+| RTL skeleton | n/a | n/a | n/a | `hw/rtl/v003/` | interface-only skeleton |
 | LLM | `pccxai/pccx-LLM-v003` (temporary planning line) | TBD | TBD | `LLM/...` | planning intake |
 | Vision | `pccxai/pccx-vision-v001` (compatibility track) | TBD | TBD | `Vision/...` | planning intake (compatibility review pending) |
 | Voice | n/a | n/a | n/a | `Voice/...` | placeholder |
