@@ -48,3 +48,10 @@ repository. It currently anchors:
 - Sparse metadata semantics.
 - Token readback sequencing rules.
 - UVM sequence coverage.
+
+## Python API Sync
+
+The companion Python package should expose only the v003 opcodes listed above.
+The current v003 package does not define `LOAD_WEIGHT`, `LOAD_PROMPT`,
+`NEXT_TOKEN`, or `RESET_KV_CACHE`; those helper names are therefore not valid
+v003 ISA opcodes until this SystemVerilog package defines them.
