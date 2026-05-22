@@ -1,14 +1,17 @@
 # common
 
-Reusable v003 common library skeleton.
+Reusable v003 common library.
 
-Current content is interface-only or signature-only:
+Current content:
 
 - `interfaces/` contains SV `interface` declarations with modports.
 - `pkg/` contains shared enum, typedef, and ISA package anchors.
-- compute directories contain pure core module signatures only.
+- `attention/attention_core.sv`, `ffn/ffn_core.sv`,
+  `matmul/matmul_int4_int8.sv`, and `normalization/rmsnorm_core.sv` contain
+  first-pass integer stream logic.
+- Remaining compute modules are still pure core signatures only.
 
-Core logic, runtime behavior, and measurement evidence are future work.
+Runtime behavior, board integration, and measurement evidence are future work.
 
 See [`SOURCE_MANIFEST.md`](../SOURCE_MANIFEST.md) and
 [`docs/`](../docs/) for the planning narrative.
