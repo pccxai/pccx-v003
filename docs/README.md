@@ -9,6 +9,7 @@ Pages:
 - [`architecture.md`](architecture.md)
 - [`isa-reference.md`](isa-reference.md)
 - [`python-isa-api.md`](python-isa-api.md)
+- [`quickstart.md`](quickstart.md)
 - [`gemma4-family-mapping.md`](gemma4-family-mapping.md)
 - [`repository-boundary.md`](repository-boundary.md)
 - [`gemma4-e4b-planning.md`](gemma4-e4b-planning.md)

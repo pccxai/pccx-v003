@@ -1,28 +1,21 @@
 # Gemma 4 Family Mapping
 
-Status: placeholder mapping. Numeric model parameters absent from the linked
-Google official Gemma 4 sources remain `TBD`.
-
-Reference check used for this skeleton:
-
-- <https://ai.google.dev/gemma/docs/get_started>
-- <https://ai.google.dev/gemma/docs/core/model_card_4>
-- <https://ai.google.dev/gemma/docs/releases>
+Status: local mapping for the current Gemma 4 E4B text smoke config. Numeric
+model parameters absent from local v003 materials remain `TBD`.
 
 ## Variant Table
 
 | Variant | hidden size | n_layers | n_heads | kv_heads | vocab_size | head_dim | context | modalities |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `GEMMA4_E2B` | TBD | 35 | TBD | TBD | 262K | TBD | 128K | text, image, audio |
-| `GEMMA4_E4B` | TBD | 42 | TBD | TBD | 262K | TBD | 128K | text, image, audio |
+| `GEMMA4_E4B` | 2560 | 42 | 8 | 2 | 262144 | 256 | 131072 | text, image, audio |
 | `GEMMA4_26B_A4B` | TBD | 30 | TBD | TBD | 262K | TBD | 256K | text, image |
 | `GEMMA4_31B` | TBD | 60 | TBD | TBD | 262K | TBD | 256K | text, image |
 
 ## Mapping Rule
 
 `hw/rtl/v003/npu_v003_constants.sv` reserves enum values and parameter anchors
-for the official family rows. Values absent from the official model card stay
-as `TBD`.
+for the family rows. Values absent from local material stay as `TBD`.
 
 ## Reusable Cover
 

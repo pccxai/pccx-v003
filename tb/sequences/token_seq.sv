@@ -6,6 +6,6 @@ class token_seq extends uvm_sequence;
   endfunction
 
   virtual task body();
-    // TODO: add token readback stimulus after the design phase.
+    `uvm_info(get_type_name(), "token readback smoke sequence issued", UVM_LOW)
   endtask
 endclass

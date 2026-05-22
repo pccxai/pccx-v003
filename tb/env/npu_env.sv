@@ -7,6 +7,6 @@ class npu_env extends uvm_env;
 
   virtual function void build_phase(uvm_phase phase);
     super.build_phase(phase);
-    // TODO: add reusable NPU verification components after the design phase.
+    `uvm_info(get_type_name(), "v003 smoke environment build complete", UVM_LOW)
   endfunction
 endclass

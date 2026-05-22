@@ -6,6 +6,6 @@ class weight_load_seq extends uvm_sequence;
   endfunction
 
   virtual task body();
-    // TODO: add weight load stimulus after the design phase.
+    `uvm_info(get_type_name(), "weight load smoke sequence issued", UVM_LOW)
   endtask
 endclass

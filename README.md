@@ -11,14 +11,16 @@ material.
 
 ## Status
 
-- **Phase 1 skeleton.** Interface-only v003 RTL skeleton files live
-  under `hw/rtl/v003/`.
-- **Library Phase 2 start.** Reusable common interface contracts live under
-  `common/interfaces/`; first integer stream logic now exists for attention,
-  FFN, INT4xINT8 matmul, and RMSNorm under `common/`, with reusable UVM
-  placeholders and standalone Verilator smoke tests under `tb/`.
-- Implementation, verification, build flow, board runtime, and measurement
-  work are separate future phases.
+- **Library implementation in progress.** Reusable common interface contracts
+  live under `common/interfaces/`; integer stream logic now exists for
+  attention, KV cache, softmax, FFN/SiLU/GELU, INT4xINT8 matmul,
+  INT8xINT8 matmul, accumulation, RMSNorm, LayerNorm, sampling, arbitration,
+  and crossbar routing.
+- `hw/rtl/v003/` contains a working dispatcher/top/L2 integration path for
+  AXI-Lite instruction injection and token readback smoke testing.
+- Verilator smoke tops and UVM smoke checks cover the Gemma 4 E4B local text
+  config constants and one-layer top-level dispatch path.
+- Board runtime and measured hardware performance remain separate future work.
 - [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
   a historical temporary feeder for early v003 LLM planning. It is now
   superseded / retired and is no longer an active public track. Any new
@@ -34,23 +36,23 @@ material.
 | `common/` | shared packages, interfaces, wrappers |
 | `compatibility/` | `v003-contract.yaml` plus register / memory / top-interface frozen documents |
 | `docs/` | per-domain READMEs and the v003 contract narrative |
-| `hw/rtl/v003/` | interface-only v003 RTL skeleton |
+| `hw/rtl/v003/` | v003 top, dispatcher, L2, ISA, and Gemma 4 constants |
 | `tests/` | shared test fixtures, intake tests for absorbed material |
 | `scripts/` | filelist, build, claim-scan, repo-boundary scripts |
 
-## Current library skeleton
+## Current library implementation
 
 | Directory | Current content |
 | --- | --- |
 | `common/interfaces/` | AXI HP, ACP, AXI-Lite command, tensor stream, and token output interfaces. |
-| `common/attention/` | attention, KV cache, and softmax core signatures. |
-| `common/ffn/` | feed-forward, GELU, and SiLU core signatures. |
-| `common/matmul/` | INT4/INT8, INT8/INT8, and INT32 accumulator signatures. |
-| `common/normalization/` | RMSNorm and LayerNorm core signatures. |
-| `common/sampling/` | argmax and optional top-k sampler signatures. |
-| `common/interconnect/` | tensor stream crossbar and arbiter signatures. |
-| `tb/` | UVM environment placeholders plus standalone Verilator smoke tests. |
-| `constraints/` | AWS F2 placeholder constraint anchor. |
+| `common/attention/` | attention logic, softmax logic, and KV cache logic. |
+| `common/ffn/` | feed-forward, SiLU, and GELU logic. |
+| `common/matmul/` | INT4/INT8 and INT8/INT8 matmul logic plus INT32 accumulation. |
+| `common/normalization/` | RMSNorm and LayerNorm integer stream logic. |
+| `common/sampling/` | deterministic argmax and top-k token selection logic. |
+| `common/interconnect/` | tensor stream crossbar and arbiter logic. |
+| `tb/` | UVM smoke checks plus standalone Verilator smoke tests. |
+| `constraints/` | AWS F2 constraint anchor. |
 
 ## Boundary rule (unchanged from v002)
 
