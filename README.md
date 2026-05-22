@@ -13,8 +13,10 @@ material.
 
 - **Phase 1 skeleton.** Interface-only v003 RTL skeleton files live
   under `hw/rtl/v003/`.
-- **Library skeleton.** Reusable common interface/core signatures live
-  under `common/`, with reusable UVM placeholders under `tb/`.
+- **Library Phase 2 start.** Reusable common interface contracts live under
+  `common/interfaces/`; first integer stream logic now exists for attention,
+  FFN, INT4xINT8 matmul, and RMSNorm under `common/`, with reusable UVM
+  placeholders and standalone Verilator smoke tests under `tb/`.
 - Implementation, verification, build flow, board runtime, and measurement
   work are separate future phases.
 - [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
@@ -47,7 +49,7 @@ material.
 | `common/normalization/` | RMSNorm and LayerNorm core signatures. |
 | `common/sampling/` | argmax and optional top-k sampler signatures. |
 | `common/interconnect/` | tensor stream crossbar and arbiter signatures. |
-| `tb/` | UVM environment, sequence, and Gemma 4 E4B smoke-test skeletons. |
+| `tb/` | UVM environment placeholders plus standalone Verilator smoke tests. |
 | `constraints/` | AWS F2 placeholder constraint anchor. |
 
 ## Boundary rule (unchanged from v002)

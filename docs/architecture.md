@@ -1,8 +1,8 @@
 # v003 Library Architecture
 
-Status: interface-only skeleton. Core RTL behavior, scheduling policy,
-verification stimulus, build flow, board runtime, and measurements are future
-work.
+Status: Phase 2 first logic. Attention, FFN, INT4xINT8 matmul, and RMSNorm
+now have one-beat integer stream behavior. Scheduling policy, build flow,
+board runtime, and measurements are future work.
 
 ## Directory Map
 
@@ -10,14 +10,14 @@ work.
 | --- | --- |
 | `common/interfaces/` | SV interface and modport contracts for host, memory, tensor, and token boundaries. |
 | `common/pkg/` | Shared enum, typedef, and ISA package skeletons. |
-| `common/attention/` | Pure attention, KV cache, and softmax core signatures. |
-| `common/ffn/` | Pure feed-forward and activation core signatures. |
-| `common/matmul/` | Quantized matmul and accumulator core signatures. |
-| `common/normalization/` | RMSNorm and LayerNorm core signatures. |
+| `common/attention/` | First attention core logic plus KV cache and softmax signatures. |
+| `common/ffn/` | First FFN core logic plus activation signatures. |
+| `common/matmul/` | First INT4xINT8 matmul logic plus fallback and accumulator signatures. |
+| `common/normalization/` | First RMSNorm logic plus LayerNorm signature. |
 | `common/sampling/` | Token selection core signatures. |
 | `common/interconnect/` | Tensor stream crossbar and arbitration signatures. |
 | `hw/rtl/v003/` | v003-specific top, dispatcher, L2 placeholder, ISA, and constants. |
-| `tb/` | UVM skeleton for reusable environment, sequences, and smoke tests. |
+| `tb/` | UVM skeleton plus standalone Verilator smoke tests. |
 | `constraints/` | AWS F2 placeholder constraint anchor. |
 
 ## Modular Rule
