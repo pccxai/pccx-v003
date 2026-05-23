@@ -19,12 +19,14 @@ package npu_v003_constants;
   localparam int Gemma4E2BVocabSize  = Gemma4ParamTbd;
   localparam int Gemma4E2BHeadDim    = Gemma4ParamTbd;
 
-  localparam int Gemma4E4BHiddenSize = Gemma4ParamTbd;
+  localparam int Gemma4E4BHiddenSize = 2560;
+  localparam int Gemma4E4BIntermediateSize = 10240;
   localparam int Gemma4E4BNLayers    = 42;
-  localparam int Gemma4E4BNHeads     = Gemma4ParamTbd;
-  localparam int Gemma4E4BKvHeads    = Gemma4ParamTbd;
-  localparam int Gemma4E4BVocabSize  = Gemma4ParamTbd;
-  localparam int Gemma4E4BHeadDim    = Gemma4ParamTbd;
+  localparam int Gemma4E4BNHeads     = 8;
+  localparam int Gemma4E4BKvHeads    = 2;
+  localparam int Gemma4E4BVocabSize  = 262144;
+  localparam int Gemma4E4BHeadDim    = 256;
+  localparam int Gemma4E4BMaxPositionEmbeddings = 131072;
 
   localparam int Gemma4TwentySixBAFourBHiddenSize = Gemma4ParamTbd;
   localparam int Gemma4TwentySixBAFourBNLayers    = 30;

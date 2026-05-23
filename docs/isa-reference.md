@@ -1,7 +1,9 @@
 # v003 ISA Reference
 
-Status: skeleton reference. Encoding fields are anchors for review; execution
-semantics are future work.
+Status: implementation reference for the current smokeable v003 package.
+Encoding fields are still compact anchors, and the dispatcher now decodes the
+opcode, forwards sparse metadata for sparse operations, and exposes token
+readback for smoke verification.
 
 ## Common Opcode Package
 
@@ -41,7 +43,7 @@ repository. It currently anchors:
 | `OP_V003_SPARSE_GEMV` | v003 sparse matrix-vector operation anchor. |
 | `OP_V003_SPARSE_GEMM` | v003 sparse matrix-matrix operation anchor. |
 
-## Deferred Work
+## Dispatcher Smoke Semantics
 
 - Instruction field layout review.
 - Dispatcher decode and scheduling behavior.
@@ -49,9 +51,21 @@ repository. It currently anchors:
 - Token readback sequencing rules.
 - UVM sequence coverage.
 
+`npu_v003_dispatcher` reads the opcode from the high `V003OpcodeW` bits of the
+64-bit instruction word and uses the low body bits as the sequence id. Sparse
+GEMV/GEMM opcodes emit structured sparse metadata with the body low 16 bits as
+the mask. Every accepted smoke instruction emits one token readback beat with
+the decoded opcode in the low token bits and `last` asserted.
+
 ## Python API Sync
 
 The companion Python package should expose only the v003 opcodes listed above.
 The current v003 package does not define `LOAD_WEIGHT`, `LOAD_PROMPT`,
 `NEXT_TOKEN`, or `RESET_KV_CACHE`; those helper names are therefore not valid
 v003 ISA opcodes until this SystemVerilog package defines them.
+
+## API Integration
+
+The local `pccx-python` package maps these v003 opcodes into the Python ISA API.
+Unsupported runtime-style calls that are not present in `isa_pkg_v003.sv` stay
+outside the v003 opcode surface.

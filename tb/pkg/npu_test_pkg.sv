@@ -3,6 +3,7 @@ package npu_test_pkg;
   timeprecision 1ps;
 
   import uvm_pkg::*;
+  import npu_v003_constants::*;
   `include "uvm_macros.svh"
 
   `include "../env/npu_env.sv"
