@@ -24,4 +24,5 @@ The common library is model-family neutral at its RTL boundary:
 - tensor data enters through `tensor_stream_if`;
 - token output exits through `token_out_if`;
 - sparse metadata is carried through explicit fields;
+- RoPE and sliding-window attention are parameterized common-library blocks;
 - variant-specific size selection is isolated in `npu_v003_constants`.

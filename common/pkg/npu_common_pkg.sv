@@ -9,6 +9,13 @@ package npu_common_pkg;
   localparam int SparseMaskW = 16;
 
   typedef enum logic [1:0] {
+    NPU_DTYPE_BF16 = 2'h0,
+    NPU_DTYPE_INT8 = 2'h1,
+    NPU_DTYPE_INT4 = 2'h2,
+    NPU_DTYPE_RESERVED = 2'h3
+  } npu_tensor_dtype_e;
+
+  typedef enum logic [1:0] {
     NPU_SPARSE_DENSE      = 2'h0,
     NPU_SPARSE_STRUCTURED = 2'h1,
     NPU_SPARSE_RESERVED_2 = 2'h2,

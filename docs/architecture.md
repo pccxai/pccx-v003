@@ -1,11 +1,11 @@
 # v003 Library Architecture
 
 Status: implementation pass. Common integer stream logic now covers attention,
-KV cache, softmax, FFN/SiLU/GELU, INT4xINT8 matmul, INT8xINT8 matmul,
-accumulation, RMSNorm, LayerNorm, sampling, arbitration, and crossbar routing.
-The v003 dispatcher, L2, top-level token readback, UVM smoke top, and Vivado
-AWS F2 synthesis script coverage are present. Board runtime and measurements
-remain future work.
+RoPE, sliding-window MHA/GQA gating, KV cache, softmax, FFN/SiLU/GELU,
+INT4xINT8 matmul, INT8xINT8 matmul, accumulation, RMSNorm, LayerNorm, sampling,
+arbitration, and crossbar routing. The v003 dispatcher, L2, top-level token
+readback, UVM smoke top, and Vivado AWS F2 synthesis script coverage are
+present. Board runtime and measurements remain future work.
 
 ## Directory Map
 
@@ -13,7 +13,7 @@ remain future work.
 | --- | --- |
 | `common/interfaces/` | SV interface and modport contracts for host, memory, tensor, and token boundaries. |
 | `common/pkg/` | Shared enum, typedef, and ISA package anchors. |
-| `common/attention/` | Attention, softmax, and KV cache logic. |
+| `common/attention/` | Attention, RoPE, sliding-window MHA/GQA, softmax, and KV cache logic. |
 | `common/ffn/` | FFN, SiLU, and GELU logic. |
 | `common/matmul/` | INT4xINT8, INT8xINT8, and INT32 accumulation logic. |
 | `common/normalization/` | RMSNorm and LayerNorm logic. |
@@ -36,6 +36,19 @@ Each RTL block is split into three roles:
 Common cores do not expose AXI directly. External command, memory, and token
 paths terminate at the v003 boundary and connect inward through the shared
 interface contracts.
+
+## Attention Slice
+
+The current attention lane is intentionally modular:
+
+- `rope_unit` rotates signed INT8 tensor pairs with an explicit rotation stream;
+- `mha_sliding_window_core` checks causal sliding-window position and GQA
+  head-to-KV-head mapping from tensor `user` metadata;
+- `kv_cache_core` remains a small addressable stream cache for local smoke and
+  unit-level integration checks.
+
+The exact model-specific sliding window length stays a wrapper/config parameter
+until backed by the selected model source.
 
 ## System Boundary
 

@@ -35,6 +35,8 @@ run_top v003_library_smoke_tb \
   common/interfaces/token_out_if.sv \
   common/attention/attention_core.sv \
   common/attention/kv_cache_core.sv \
+  common/attention/mha_sliding_window_core.sv \
+  common/attention/rope_unit.sv \
   common/attention/softmax_unit.sv \
   common/ffn/ffn_core.sv \
   common/ffn/gelu_unit.sv \

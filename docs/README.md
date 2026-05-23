@@ -1,7 +1,7 @@
-# pccx-v003 docs (planning)
+# pccx-v003 docs
 
-This directory holds planning narratives only. The canonical
-public-facing v003 docs live on the PCCX site at
+This directory holds the v003 implementation narrative and evidence gates. The
+canonical public-facing v003 docs live on the PCCX site at
 <https://pccx.pages.dev/en/docs/v003/>.
 
 Pages:

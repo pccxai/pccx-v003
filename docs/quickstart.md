@@ -1,6 +1,7 @@
 # v003 Quickstart
 
-Status: local smoke and synthesis-prep flow for the current v003 library branch.
+Status: local full-available simulation and AWS F2 synthesis-prep flow for the
+current v003 library branch.
 
 ## 1. Check the Common Library
 
@@ -13,6 +14,8 @@ verible-verilog-syntax --printtree=false \
   common/interfaces/token_out_if.sv \
   common/attention/attention_core.sv \
   common/attention/kv_cache_core.sv \
+  common/attention/mha_sliding_window_core.sv \
+  common/attention/rope_unit.sv \
   common/attention/softmax_unit.sv \
   common/ffn/ffn_core.sv \
   common/ffn/gelu_unit.sv \
@@ -28,13 +31,13 @@ verible-verilog-syntax --printtree=false \
   common/sampling/topk_sampler.sv
 ```
 
-## 2. Run Standalone Verilator Smoke
+## 2. Run Standalone Verilator Simulation
 
 ```sh
-scripts/run_verilator_smoke.sh
+bash scripts/run_verilator_full_sim.sh
 ```
 
-The script builds:
+The full-sim wrapper builds the available standalone Verilator tops:
 
 - `v003_library_smoke_tb`
 - `gemma4_4b_variant_smoke_tb`
@@ -53,7 +56,7 @@ then run:
 +UVM_TESTNAME=test_gemma4_e4b_smoke
 ```
 
-## 4. Prepare AWS F2 Synthesis
+## 4. Run AWS F2 Out-of-Context Synthesis
 
 Set the selected AWS F2 shell part in the environment, then launch Vivado with
 the Tcl script:

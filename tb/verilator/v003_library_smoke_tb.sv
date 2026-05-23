@@ -14,6 +14,15 @@ module v003_library_smoke_tb;
   tensor_stream_if #(.DATA_W(DataW)) attn_value_if (.clk(clk), .rst_n(rst_n));
   tensor_stream_if #(.DATA_W(DataW)) attn_context_if (.clk(clk), .rst_n(rst_n));
 
+  tensor_stream_if #(.DATA_W(DataW)) rope_input_if (.clk(clk), .rst_n(rst_n));
+  tensor_stream_if #(.DATA_W(DataW)) rope_rotation_if (.clk(clk), .rst_n(rst_n));
+  tensor_stream_if #(.DATA_W(DataW)) rope_output_if (.clk(clk), .rst_n(rst_n));
+
+  tensor_stream_if #(.DATA_W(DataW)) mha_query_if (.clk(clk), .rst_n(rst_n));
+  tensor_stream_if #(.DATA_W(DataW)) mha_key_if (.clk(clk), .rst_n(rst_n));
+  tensor_stream_if #(.DATA_W(DataW)) mha_value_if (.clk(clk), .rst_n(rst_n));
+  tensor_stream_if #(.DATA_W(DataW)) mha_context_if (.clk(clk), .rst_n(rst_n));
+
   tensor_stream_if #(.DATA_W(DataW)) softmax_logits_if (.clk(clk), .rst_n(rst_n));
   tensor_stream_if #(.DATA_W(DataW)) softmax_prob_if (.clk(clk), .rst_n(rst_n));
 
@@ -74,6 +83,29 @@ module v003_library_smoke_tb;
       .S_KEY(attn_key_if),
       .S_VALUE(attn_value_if),
       .M_CONTEXT(attn_context_if)
+  );
+
+  rope_unit #(.DATA_W(DataW)) u_rope_unit (
+      .clk(clk),
+      .rst_n(rst_n),
+      .S_INPUT(rope_input_if),
+      .S_ROTATION(rope_rotation_if),
+      .M_OUTPUT(rope_output_if)
+  );
+
+  mha_sliding_window_core #(
+      .DATA_W(DataW),
+      .HEADS(8),
+      .KV_HEADS(2),
+      .WINDOW_TOKENS(4),
+      .SCORE_SCALE_SHIFT(5)
+  ) u_mha_sliding_window_core (
+      .clk(clk),
+      .rst_n(rst_n),
+      .S_QUERY(mha_query_if),
+      .S_KEY(mha_key_if),
+      .S_VALUE(mha_value_if),
+      .M_CONTEXT(mha_context_if)
   );
 
   softmax_unit #(.DATA_W(DataW)) u_softmax_unit (
@@ -244,6 +276,83 @@ module v003_library_smoke_tb;
     end
     expect_word("attention", attn_context_if.data, 32'he01fc03f);
     expect_word("attention user", attn_context_if.user, 32'h000000a1);
+  endtask
+
+  task automatic run_rope_smoke;
+    rope_output_if.ready = 1'b1;
+    rope_input_if.data = 32'h40000040;
+    rope_rotation_if.data = 32'h007f7f00;
+    rope_input_if.keep = 4'hf;
+    rope_rotation_if.keep = 4'hf;
+    rope_input_if.user = 32'h000000a7;
+    rope_rotation_if.user = 32'h000000a8;
+    rope_input_if.last = 1'b1;
+    rope_rotation_if.last = 1'b1;
+    rope_input_if.valid = 1'b1;
+    rope_rotation_if.valid = 1'b1;
+
+    @(posedge clk);
+    #1;
+    rope_input_if.valid = 1'b0;
+    rope_rotation_if.valid = 1'b0;
+
+    if (!rope_output_if.valid) begin
+      $fatal(1, "rope output did not become valid");
+    end
+    expect_word("rope", rope_output_if.data, 32'h3f003f00);
+    expect_word("rope user", rope_output_if.user, 32'h000000a7);
+  endtask
+
+  task automatic run_mha_sliding_window_smoke;
+    mha_context_if.ready = 1'b1;
+    mha_query_if.data = 32'h01010101;
+    mha_key_if.data = 32'h01010101;
+    mha_value_if.data = 32'he020c040;
+    mha_query_if.keep = 4'hf;
+    mha_key_if.keep = 4'hf;
+    mha_value_if.keep = 4'hf;
+    mha_query_if.user = 32'h00030008;
+    mha_key_if.user = 32'h00010006;
+    mha_value_if.user = 32'h00010006;
+    mha_query_if.last = 1'b1;
+    mha_key_if.last = 1'b1;
+    mha_value_if.last = 1'b1;
+    mha_query_if.valid = 1'b1;
+    mha_key_if.valid = 1'b1;
+    mha_value_if.valid = 1'b1;
+
+    @(posedge clk);
+    #1;
+    mha_query_if.valid = 1'b0;
+    mha_key_if.valid = 1'b0;
+    mha_value_if.valid = 1'b0;
+
+    if (!mha_context_if.valid) begin
+      $fatal(1, "mha output did not become valid");
+    end
+    expect_word("mha", mha_context_if.data, 32'he01fc03f);
+    expect_word("mha user", mha_context_if.user, 32'h00030008);
+
+    @(posedge clk);
+    #1;
+    mha_query_if.user = 32'h00030008;
+    mha_key_if.user = 32'h00010003;
+    mha_value_if.user = 32'h00010003;
+    mha_query_if.valid = 1'b1;
+    mha_key_if.valid = 1'b1;
+    mha_value_if.valid = 1'b1;
+
+    @(posedge clk);
+    #1;
+    mha_query_if.valid = 1'b0;
+    mha_key_if.valid = 1'b0;
+    mha_value_if.valid = 1'b0;
+
+    if (!mha_context_if.valid) begin
+      $fatal(1, "mha masked output did not become valid");
+    end
+    expect_word("mha masked data", mha_context_if.data, 32'h00000000);
+    expect_word("mha masked keep", {{(DataW - 4){1'b0}}, mha_context_if.keep}, 32'h00000000);
   endtask
 
   task automatic run_softmax_smoke;
@@ -584,6 +693,33 @@ module v003_library_smoke_tb;
     attn_value_if.valid = 1'b0;
     attn_value_if.last = 1'b0;
     attn_context_if.ready = 1'b0;
+    rope_input_if.data = '0;
+    rope_input_if.keep = '0;
+    rope_input_if.user = '0;
+    rope_input_if.valid = 1'b0;
+    rope_input_if.last = 1'b0;
+    rope_rotation_if.data = '0;
+    rope_rotation_if.keep = '0;
+    rope_rotation_if.user = '0;
+    rope_rotation_if.valid = 1'b0;
+    rope_rotation_if.last = 1'b0;
+    rope_output_if.ready = 1'b0;
+    mha_query_if.data = '0;
+    mha_query_if.keep = '0;
+    mha_query_if.user = '0;
+    mha_query_if.valid = 1'b0;
+    mha_query_if.last = 1'b0;
+    mha_key_if.data = '0;
+    mha_key_if.keep = '0;
+    mha_key_if.user = '0;
+    mha_key_if.valid = 1'b0;
+    mha_key_if.last = 1'b0;
+    mha_value_if.data = '0;
+    mha_value_if.keep = '0;
+    mha_value_if.user = '0;
+    mha_value_if.valid = 1'b0;
+    mha_value_if.last = 1'b0;
+    mha_context_if.ready = 1'b0;
     softmax_logits_if.data = '0;
     softmax_logits_if.keep = '0;
     softmax_logits_if.user = '0;
@@ -715,6 +851,10 @@ module v003_library_smoke_tb;
     @(posedge clk);
 
     run_attention_smoke();
+    @(posedge clk);
+    run_rope_smoke();
+    @(posedge clk);
+    run_mha_sliding_window_smoke();
     @(posedge clk);
     run_softmax_smoke();
     @(posedge clk);

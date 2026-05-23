@@ -1,9 +1,15 @@
-# LLM (planning)
+# LLM
 
-Planning placeholder. Real LLM source intake follows the central
-v003 compatibility contract once reviewed. The Phase 1 RTL skeleton
-is limited to `hw/rtl/v003/`; implementation RTL, runtime, and
-evidence are not added here.
+Reviewed LLM wrapper slices live here after they pass the central v003
+compatibility contract.
+
+Current content:
+
+- `gemma4/gemma4_attention_slice.sv` connects RoPE and parameterized
+  sliding-window MHA/GQA over the shared tensor stream boundary.
+
+Full model wrappers, runtime behavior, weights, and board evidence are future
+work.
 
 See [`SOURCE_MANIFEST.md`](../SOURCE_MANIFEST.md) and
-[`docs/`](../docs/) for the planning narrative.
+[`docs/`](../docs/) for the implementation narrative.
