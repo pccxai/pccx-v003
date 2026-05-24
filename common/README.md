@@ -6,6 +6,8 @@ Current content:
 
 - `interfaces/` contains SV `interface` declarations with modports.
 - `pkg/` contains shared enum, dtype, typedef, and ISA package anchors.
+- `bf16/` contains BF16 lane helpers plus BF16 attention, RoPE, MLP, and
+  RMSNorm slices for the smallest-target decode path.
 - `attention/attention_core.sv`, `attention/softmax_unit.sv`,
   `attention/rope_unit.sv`, `attention/mha_sliding_window_core.sv`,
   `attention/kv_cache_core.sv`, `ffn/ffn_core.sv`, `ffn/silu_unit.sv`,

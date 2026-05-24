@@ -17,13 +17,16 @@ material.
   attention, RoPE, sliding-window MHA, KV cache, softmax, FFN/SiLU/GELU,
   INT4xINT8 matmul,
   INT8xINT8 matmul, accumulation, RMSNorm, LayerNorm, sampling, arbitration,
-  and crossbar routing.
+  and crossbar routing. A BF16 lane slice now covers attention, RoPE, MLP, and
+  RMSNorm for the smallest-target decode path.
 - `hw/rtl/v003/` contains a working dispatcher/top/L2 integration path for
   AXI-Lite instruction injection and token readback smoke testing.
 - Verilator smoke tops and UVM smoke checks cover the Gemma 4 E4B local text
-  config constants and one-layer top-level dispatch path.
-- The local v003 target is common RTL logic plus Gemma 4 E4B, Verilator full
-  available simulation coverage, and AWS F2 out-of-context synthesis setup.
+  config constants, one-layer top-level dispatch path, and Gemma 4 E2B BF16
+  decode-slice path.
+- The local v003 target is common RTL logic plus the smallest reviewed Gemma 4
+  family row first, Verilator/xsim smoke entrypoints, and AWS F2
+  out-of-context synthesis/deploy-preview setup.
 - Board runtime and measured hardware performance remain separate future work.
 - [`pccxai/pccx-LLM-v003`](https://github.com/pccxai/pccx-LLM-v003) was
   a historical temporary feeder for early v003 LLM planning. It is now
@@ -50,6 +53,7 @@ material.
 | --- | --- |
 | `common/interfaces/` | AXI HP, ACP, AXI-Lite command, tensor stream, and token output interfaces. |
 | `common/attention/` | attention, RoPE, sliding-window MHA, softmax, and KV cache logic. |
+| `common/bf16/` | BF16 lane helpers and BF16 attention/RoPE/MLP/RMSNorm slices. |
 | `common/ffn/` | feed-forward, SiLU, and GELU logic. |
 | `common/matmul/` | INT4/INT8 and INT8/INT8 matmul logic plus INT32 accumulation. |
 | `common/normalization/` | RMSNorm and LayerNorm integer stream logic. |
