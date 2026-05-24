@@ -11,6 +11,8 @@ Standalone smoke tests for the v003 common-library logic pass.
   start path and checks token readback.
 - `gemma4_e2b_bf16_decode_tb.sv` drives the smallest-target BF16 decode slice
   through RMSNorm, RoPE, KV-cache lookup, attention, MLP, and token readback.
+- `gemma4_bf16_functional_crosscheck_tb.sv` compares BF16 Attention, MLP, and
+  RMSNorm RTL outputs against the checked-in Python-generated vector package.
 
 Run from the repository root:
 

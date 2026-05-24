@@ -11,6 +11,9 @@ Current content:
 - `gemma4_attention_slice.sv` wires query/key RoPE into parameterized
   sliding-window MHA/GQA logic through `tensor_stream_if`.
 
+The functional reference for the current smallest BF16 slice lives under
+`tests/functional/` and feeds the Verilator cross-check vectors.
+
 The wrapper keeps exact model dimensions as parameters. E2B/E4B/nano-specific
 top wrappers should set those parameters only from reviewed source material.
 Board runtime, weights, and measured performance are outside this directory.

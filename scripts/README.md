@@ -1,11 +1,19 @@
 # scripts
 
 `run_verilator_smoke.sh` runs the standalone v003 common-library, Gemma 4 E4B
-one-layer, and Gemma 4 E2B BF16 decode-slice smoke tests when Verilator is
-installed locally.
+one-layer, Gemma 4 E2B BF16 decode-slice, and BF16 functional cross-check smoke
+tests when Verilator is installed locally.
 
 `run_verilator_full_sim.sh` is the v003 decision gate wrapper for the full
 available local Verilator simulation set.
+
+`run_functional_model_tests.sh` runs the Python functional-model unit checks and
+verifies that the checked-in RTL vector package still matches the Python
+reference.
+
+`benchmark_functional_model.py` runs a local pure-Python benchmark for the
+current BF16 Attention, MLP, RMSNorm, and one-token decode reference path. It is
+for repeatable local comparison only.
 
 `run_xsim_smoke.sh` runs the Gemma 4 E2B BF16 decode-slice smoke through the
 Vivado xsim toolchain when `xvlog`, `xelab`, and `xsim` are available.

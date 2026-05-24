@@ -31,7 +31,23 @@ verible-verilog-syntax --printtree=false \
   common/sampling/topk_sampler.sv
 ```
 
-## 2. Run Standalone Verilator Simulation
+## 2. Run the Functional Model Gate
+
+```sh
+bash scripts/run_functional_model_tests.sh
+```
+
+This checks the Python BF16 Attention/MLP/RMSNorm reference and verifies that
+`tb/verilator/gemma4_bf16_functional_vectors.svh` still matches the generated
+RTL vector package.
+
+For a local pure-Python timing baseline:
+
+```sh
+python3 scripts/benchmark_functional_model.py --iterations 5000 --lanes 16
+```
+
+## 3. Run Standalone Verilator Simulation
 
 ```sh
 bash scripts/run_verilator_full_sim.sh
@@ -43,11 +59,12 @@ The full-sim wrapper builds the available standalone Verilator tops:
 - `gemma4_4b_variant_smoke_tb`
 - `gemma4_e4b_one_layer_tb`
 - `gemma4_e2b_bf16_decode_tb`
+- `gemma4_bf16_functional_crosscheck_tb`
 
 If `verilator` is not installed, the script exits before simulation and reports
 the missing tool.
 
-## 3. Run the UVM Smoke Top
+## 4. Run the UVM Smoke Top
 
 The UVM package is under `tb/pkg/npu_test_pkg.sv`; the top-level smoke wrapper
 is `tb/uvm/npu_v003_uvm_tb.sv`. Compile it with a simulator that provides UVM,
@@ -57,7 +74,7 @@ then run:
 +UVM_TESTNAME=test_gemma4_e4b_smoke
 ```
 
-## 4. Run the xsim BF16 Decode Smoke
+## 5. Run the xsim BF16 Decode Smoke
 
 ```sh
 bash scripts/run_xsim_smoke.sh
@@ -66,7 +83,7 @@ bash scripts/run_xsim_smoke.sh
 This compiles the Gemma 4 E2B BF16 decode slice with `xvlog`, elaborates it
 with `xelab`, and runs the smoke with `xsim`.
 
-## 5. Run AWS F2 Out-of-Context Synthesis
+## 6. Run AWS F2 Out-of-Context Synthesis
 
 Set the selected AWS F2 shell part in the environment, then launch Vivado with
 the Tcl script:
@@ -91,7 +108,7 @@ calls:
 bash scripts/aws_f2_deploy_preview.sh
 ```
 
-## 6. Python ISA API
+## 7. Python ISA API
 
 The companion `pccx-python` local package exposes v003 ISA opcodes through its
 Python API. Keep v003 calls limited to opcodes defined in

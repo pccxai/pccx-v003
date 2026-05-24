@@ -21,6 +21,7 @@ run_top() {
     --timing \
     --Wall \
     --Wno-fatal \
+    -I. \
     -Ihw/rtl/v003 \
     --top-module "$top" \
     --Mdir "$build_dir" \
@@ -75,3 +76,11 @@ run_top gemma4_e2b_bf16_decode_tb \
   common/bf16/bf16_rope_unit.sv \
   LLM/gemma4/gemma4_e2b_bf16_decode_slice.sv \
   tb/verilator/gemma4_e2b_bf16_decode_tb.sv
+
+run_top gemma4_bf16_functional_crosscheck_tb \
+  common/bf16/bf16_lane_pkg.sv \
+  common/interfaces/tensor_stream_if.sv \
+  common/bf16/bf16_attention_core.sv \
+  common/bf16/bf16_mlp_core.sv \
+  common/bf16/bf16_rmsnorm_core.sv \
+  tb/verilator/gemma4_bf16_functional_crosscheck_tb.sv
