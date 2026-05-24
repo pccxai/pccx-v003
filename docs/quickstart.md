@@ -42,6 +42,7 @@ The full-sim wrapper builds the available standalone Verilator tops:
 - `v003_library_smoke_tb`
 - `gemma4_4b_variant_smoke_tb`
 - `gemma4_e4b_one_layer_tb`
+- `gemma4_e2b_bf16_decode_tb`
 
 If `verilator` is not installed, the script exits before simulation and reports
 the missing tool.
@@ -56,7 +57,16 @@ then run:
 +UVM_TESTNAME=test_gemma4_e4b_smoke
 ```
 
-## 4. Run AWS F2 Out-of-Context Synthesis
+## 4. Run the xsim BF16 Decode Smoke
+
+```sh
+bash scripts/run_xsim_smoke.sh
+```
+
+This compiles the Gemma 4 E2B BF16 decode slice with `xvlog`, elaborates it
+with `xelab`, and runs the smoke with `xsim`.
+
+## 5. Run AWS F2 Out-of-Context Synthesis
 
 Set the selected AWS F2 shell part in the environment, then launch Vivado with
 the Tcl script:
@@ -70,7 +80,18 @@ The script performs out-of-context synthesis for `npu_v003_top` and writes the
 synthesis checkpoint plus utilization and timing summary reports under
 `build/v003_aws_f2_synth/`.
 
-## 5. Python ISA API
+This is a deploy-preview synthesis anchor only. Implementation, bitstream
+generation, AFI creation, and board or F2 runtime execution require a separate
+operator-controlled Vivado/AWS flow and evidence logs.
+
+After synthesis succeeds, preview the deploy packaging gate without AWS API
+calls:
+
+```sh
+bash scripts/aws_f2_deploy_preview.sh
+```
+
+## 6. Python ISA API
 
 The companion `pccx-python` local package exposes v003 ISA opcodes through its
 Python API. Keep v003 calls limited to opcodes defined in

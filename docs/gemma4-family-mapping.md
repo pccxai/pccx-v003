@@ -1,7 +1,8 @@
 # Gemma 4 Family Mapping
 
-Status: local mapping for the current Gemma 4 E4B text smoke config. Numeric
-model parameters absent from local v003 materials remain `TBD`.
+Status: local mapping for the current smallest-target and Gemma 4 E4B text
+smoke configs. Numeric model parameters absent from local v003 materials remain
+`TBD`.
 
 ## Variant Table
 
@@ -16,6 +17,9 @@ model parameters absent from local v003 materials remain `TBD`.
 
 `hw/rtl/v003/npu_v003_constants.sv` reserves enum values and parameter anchors
 for the family rows. Values absent from local material stay as `TBD`.
+`Gemma4V003SmallestTarget` currently points at `GEMMA4_E2B`, with separate
+local smoke constants for the BF16 decode slice. Nano/E1B remains an explicit
+candidate only after a reviewed source provides exact shape parameters.
 
 ## Reusable Cover
 
@@ -26,3 +30,5 @@ The common library is model-family neutral at its RTL boundary:
 - sparse metadata is carried through explicit fields;
 - RoPE and sliding-window attention are parameterized common-library blocks;
 - variant-specific size selection is isolated in `npu_v003_constants`.
+- BF16 Attention/RoPE/MLP/RMSNorm logic is isolated under `common/bf16/`;
+- the smallest-target decode wrapper is isolated under `LLM/gemma4/`.

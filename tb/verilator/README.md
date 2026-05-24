@@ -9,6 +9,8 @@ Standalone smoke tests for the v003 common-library logic pass.
   constants reflected in `npu_v003_constants.sv`.
 - `gemma4_e4b_one_layer_tb.sv` drives `npu_v003_top` through the one-layer
   start path and checks token readback.
+- `gemma4_e2b_bf16_decode_tb.sv` drives the smallest-target BF16 decode slice
+  through RMSNorm, RoPE, KV-cache lookup, attention, MLP, and token readback.
 
 Run from the repository root:
 

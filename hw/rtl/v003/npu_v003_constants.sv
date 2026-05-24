@@ -19,6 +19,14 @@ package npu_v003_constants;
   localparam int Gemma4E2BVocabSize  = Gemma4ParamTbd;
   localparam int Gemma4E2BHeadDim    = Gemma4ParamTbd;
 
+  localparam gemma4_variant_t Gemma4V003SmallestTarget = GEMMA4_E2B;
+  localparam int Gemma4SmallestSmokeHiddenSize = 256;
+  localparam int Gemma4SmallestSmokeLayers = 1;
+  localparam int Gemma4SmallestSmokeHeads = 4;
+  localparam int Gemma4SmallestSmokeKvHeads = 1;
+  localparam int Gemma4SmallestSmokeHeadDim = 64;
+  localparam int Gemma4SmallestSmokeDataW = 256;
+
   localparam int Gemma4E4BHiddenSize = 2560;
   localparam int Gemma4E4BIntermediateSize = 10240;
   localparam int Gemma4E4BNLayers    = 42;

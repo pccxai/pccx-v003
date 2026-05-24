@@ -3,9 +3,11 @@
 Status: implementation pass. Common integer stream logic now covers attention,
 RoPE, sliding-window MHA/GQA gating, KV cache, softmax, FFN/SiLU/GELU,
 INT4xINT8 matmul, INT8xINT8 matmul, accumulation, RMSNorm, LayerNorm, sampling,
-arbitration, and crossbar routing. The v003 dispatcher, L2, top-level token
-readback, UVM smoke top, and Vivado AWS F2 synthesis script coverage are
-present. Board runtime and measurements remain future work.
+arbitration, and crossbar routing. A BF16 lane slice covers Attention, RoPE,
+MLP, and RMSNorm for the smallest-target decode path. The v003 dispatcher, L2,
+top-level token readback, UVM smoke top, xsim smoke entrypoint, and Vivado AWS
+F2 synthesis/deploy-preview script coverage are present. Board runtime and
+measurements remain future work.
 
 ## Directory Map
 
@@ -14,6 +16,7 @@ present. Board runtime and measurements remain future work.
 | `common/interfaces/` | SV interface and modport contracts for host, memory, tensor, and token boundaries. |
 | `common/pkg/` | Shared enum, typedef, and ISA package anchors. |
 | `common/attention/` | Attention, RoPE, sliding-window MHA/GQA, softmax, and KV cache logic. |
+| `common/bf16/` | BF16 lane helpers and BF16 Attention/RoPE/MLP/RMSNorm slices. |
 | `common/ffn/` | FFN, SiLU, and GELU logic. |
 | `common/matmul/` | INT4xINT8, INT8xINT8, and INT32 accumulation logic. |
 | `common/normalization/` | RMSNorm and LayerNorm logic. |
@@ -49,6 +52,23 @@ The current attention lane is intentionally modular:
 
 The exact model-specific sliding window length stays a wrapper/config parameter
 until backed by the selected model source.
+
+## Smallest-Target BF16 Slice
+
+The first v003 Gemma-family implementation target is the smallest reviewed
+family row, currently anchored as `GEMMA4_E2B` in
+`npu_v003_constants.sv`. If a reviewed nano/E1B model source becomes available,
+that row can replace the target without changing the common BF16 module
+boundaries.
+
+The local BF16 decode slice is:
+
+```text
+tensor input -> BF16 RMSNorm -> BF16 RoPE -> KV-cache-backed BF16 attention
+             -> BF16 MLP -> token readback
+```
+
+This is a single-model smoke path, not a full model runtime or board result.
 
 ## System Boundary
 
