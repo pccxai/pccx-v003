@@ -63,3 +63,15 @@ run_top gemma4_e4b_one_layer_tb \
   hw/rtl/v003/npu_v003_l2_uram.sv \
   hw/rtl/v003/npu_v003_top.sv \
   tb/verilator/gemma4_e4b_one_layer_tb.sv
+
+run_top gemma4_e2b_bf16_decode_tb \
+  common/bf16/bf16_lane_pkg.sv \
+  common/interfaces/tensor_stream_if.sv \
+  common/interfaces/token_out_if.sv \
+  common/attention/kv_cache_core.sv \
+  common/bf16/bf16_attention_core.sv \
+  common/bf16/bf16_mlp_core.sv \
+  common/bf16/bf16_rmsnorm_core.sv \
+  common/bf16/bf16_rope_unit.sv \
+  LLM/gemma4/gemma4_e2b_bf16_decode_slice.sv \
+  tb/verilator/gemma4_e2b_bf16_decode_tb.sv

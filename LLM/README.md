@@ -5,6 +5,9 @@ compatibility contract.
 
 Current content:
 
+- `gemma4/gemma4_e2b_bf16_decode_slice.sv` connects BF16 RMSNorm, RoPE,
+  KV-cache lookup, attention, and MLP blocks into the smallest-target local
+  decode path.
 - `gemma4/gemma4_attention_slice.sv` connects RoPE and parameterized
   sliding-window MHA/GQA over the shared tensor stream boundary.
 
