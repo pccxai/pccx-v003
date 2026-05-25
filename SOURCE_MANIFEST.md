@@ -10,7 +10,7 @@
 | Common interfaces | n/a | n/a | n/a | `common/interfaces/` | SV interface/modport contracts |
 | Common core logic | n/a | n/a | n/a | `common/{attention,bf16,ffn,matmul,normalization,sampling,interconnect}/` | local integer stream logic plus BF16 attention/RoPE/MLP/RMSNorm slices |
 | UVM and simulation tests | n/a | n/a | n/a | `tb/`, `scripts/run_verilator_full_sim.sh`, `scripts/run_xsim_smoke.sh` | UVM smoke top plus standalone Verilator, xsim, and functional cross-check entrypoints |
-| Functional model | n/a | n/a | n/a | `tests/functional/`, `scripts/benchmark_functional_model.py`, `scripts/run_functional_model_tests.sh` | local Python reference for current BF16 Attention/MLP/RMSNorm behavior, generated RTL vectors, and benchmark runner |
+| Functional model | n/a | n/a | n/a | `tests/functional/`, `scripts/benchmark_functional_model.py`, `scripts/run_functional_model_tests.sh` | local Python reference for current BF16 Attention/MLP/RMSNorm behavior, tiny Gemma 4-family forward fixture, BF16/INT4 quantization checks, generated RTL vectors, and benchmark runner |
 | AWS F2 synthesis | n/a | n/a | n/a | `constraints/v003_aws_f2.xdc`, `scripts/run_vivado_aws_f2_synth.tcl`, `scripts/aws_f2_deploy_preview.sh` | synthesis script requires official `AWS_F2_PART`; deploy preview is local preflight only |
 | LLM | n/a | n/a | n/a | `LLM/gemma4/` | local Gemma-family attention wrapper and smallest-target BF16 decode slices |
 | Vision | `pccxai/pccx-vision-v001` (compatibility track) | TBD | TBD | `Vision/...` | planning intake (compatibility review pending) |

@@ -9,7 +9,8 @@ MLP, and RMSNorm for the smallest-target decode path. The v003 dispatcher, L2,
 top-level token readback, UVM smoke top, xsim smoke entrypoint, and Vivado AWS
 F2 synthesis/deploy-preview script coverage are present. The Python functional
 model now emits checked-in RTL cross-check vectors for the BF16 Attention, MLP,
-and RMSNorm slice. Board runtime and measurements remain future work.
+and RMSNorm slice, and the tiny Gemma 4-family fixture covers BF16/INT4
+software quantization checks. Board runtime and measurements remain future work.
 
 ## Directory Map
 
@@ -26,7 +27,7 @@ and RMSNorm slice. Board runtime and measurements remain future work.
 | `common/interconnect/` | Tensor stream crossbar and arbitration logic. |
 | `hw/rtl/v003/` | v003-specific top, dispatcher, L2, ISA, and Gemma 4 constants. |
 | `tb/` | UVM smoke tests plus standalone Verilator smoke tests and functional cross-check vectors. |
-| `tests/functional/` | Python reference model, vector generator, and unit tests for the current BF16 slice. |
+| `tests/functional/` | Python reference model, BF16/INT4 quantization helpers, vector generator, and unit tests for the current BF16 slice. |
 | `constraints/` | AWS F2 constraint anchor. |
 
 ## Modular Rule
@@ -80,6 +81,9 @@ behavior used by the RTL slice. `tests/functional/rtl_vectors.py` renders
 `tb/verilator/gemma4_bf16_functional_vectors.svh`, and
 `tb/verilator/gemma4_bf16_functional_crosscheck_tb.sv` compares RTL outputs
 against those vectors in the Verilator smoke flow.
+`tests/functional/gemma4_functional_model.py` and
+`tests/functional/gemma4_quantization.py` add the local tiny forward fixture
+and BF16/INT4 software quantization checks.
 
 Run the Python side before any RTL smoke update:
 

@@ -25,7 +25,8 @@ material.
   config constants, one-layer top-level dispatch path, and Gemma 4 E2B BF16
   decode-slice path.
 - Python functional-model fixtures cover the current BF16 Attention, MLP, and
-  RMSNorm lane behavior and feed a Verilator RTL cross-check vector package.
+  RMSNorm lane behavior, a tiny Gemma 4-family forward path with BF16/INT4
+  quantization checks, and a Verilator RTL cross-check vector package.
 - The local v003 target is common RTL logic plus the smallest reviewed Gemma 4
   family row first, Verilator/xsim smoke entrypoints, and AWS F2
   out-of-context synthesis/deploy-preview setup.
