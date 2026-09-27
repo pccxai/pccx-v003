@@ -1,7 +1,14 @@
 # PCCX v003 — IP-core implementation package
 
-> **PCCX™ v003 is an implementation branch for the July-before synthesis
-> target**, not a stable RTL release or fabrication claim.
+PCCX is an open-source semiconductor project initiated and operated by
+**Altifigence**. [Start here](https://github.com/pccxai/pccx/blob/main/START_HERE.md)
+· [Website](https://pccx.ai/) · [Roadmap](https://github.com/orgs/pccxai/projects/1)
+· [Transparency](https://pccx.ai/en/legal/transparency/).
+The repository license and file-level notices define usage rights; project
+participation does not transfer contributor ownership or require a paid tool.
+
+
+> **PCCX™ v003 is an experimental implementation line**, not a stable RTL release or fabrication claim.
 
 This repository is the canonical home for the next-generation PCCX™
 v003 IP-core line. It mirrors the layout of the published `pccx-v002`
@@ -71,9 +78,9 @@ this package at a SHA that is reachable from `pccx-v003/main`.
 
 ## Canonical docs
 
-- Project site: <https://pccx.pages.dev/en/>
-- v003 pages: <https://pccx.pages.dev/en/docs/v003/>
-- v002 contract narrative (reference): <https://pccx.pages.dev/en/docs/reference/v002-contract.html>
+- Project site: <https://docs.pccx.ai/en/>
+- v003 pages: <https://docs.pccx.ai/en/docs/v003/>
+- v002 contract narrative (reference): <https://docs.pccx.ai/en/docs/reference/v002-contract.html>
 
 ## Trackers
 
